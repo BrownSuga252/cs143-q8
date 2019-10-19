@@ -24,11 +24,11 @@ class Firewall (EventMixin):
 
     def _handle_ConnectionUp (self, event):
         for (first,second) in self.list:
-            match = of.ofp_match()
-            match.dl_src = first
-            match.dl_dst = second
+            pair = of.ofp_match()
             msg = of.ofp_flow_mod()
-            msg.match = match
+            pair.dl_src = first
+            pair.dl_dst = second
+            msg.match = pair
             event.connection.send(msg)
         
         log.debug("Firewall rules installed on %s", dpidToStr(event.dpid))
