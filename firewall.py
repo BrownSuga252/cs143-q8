@@ -25,8 +25,8 @@ class Firewall (EventMixin):
     def _handle_ConnectionUp (self, event):
         for (first,second) in self.list:
             match = of.ofp_match()
-            match.dl_src = source
-            match.dl_dst = dest
+            match.dl_src = first
+            match.dl_dst = second
             msg = of.ofp_flow_mod()
             msg.match = match
             event.connection.send(msg)
