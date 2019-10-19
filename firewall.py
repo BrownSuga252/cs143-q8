@@ -8,7 +8,8 @@ import os
 import csv
 
 log = core.getLogger()
-policyFile = "%s/pox/pox/misc/firewall-policies.csv" % os.environ[ 'HOME' ]  
+policyFile = "%s/pox/pox/misc/firewall-policies.csv" % os.environ[ 'HOME' ]
+file = csv.DictReader(open(policyFile))
 
 class Firewall (EventMixin):
 
@@ -16,7 +17,7 @@ class Firewall (EventMixin):
         self.listenTo(core.openflow)
         self.list = []
         log.debug("Enabling Firewall Module")
-        for entry in input_file:
+        for entry in file:
             first = entry["mac_0"]
             second = entry["mac_1"]
             self.list.append((EthAddr(first), EthAddr(second)))
